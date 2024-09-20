@@ -17,7 +17,10 @@ async function run() {
     stopButton.addEventListener('click', stopAudio);
     delaySlider.addEventListener('input', updateDelay);
     // volumeSlider.addEventListener('input', updateVolume);
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const stream = await navigator.mediaDevices.getDisplayMedia({ 
+        video: true, 
+        audio: true,
+    });
 
     function updateDelay() {
         const delay = parseFloat(delaySlider.value);
