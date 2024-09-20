@@ -13,7 +13,7 @@ impl AudioDelay {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Result<AudioDelay, JsValue> {
         let context = AudioContext::new()?;
-        let delay_node = context.create_delay_with_max_delay_time(10.0)?;
+        let delay_node = context.create_delay_with_max_delay_time(120.0)?;
         delay_node.connect_with_audio_node(&context.destination())?;
 
         Ok(AudioDelay {
