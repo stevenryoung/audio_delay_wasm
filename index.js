@@ -34,10 +34,19 @@ async function run() {
 
 async function startAudio() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioDelay.start(stream);
+        const stream = await navigator.mediaDevices.getDisplayMedia({ 
+            video: true, 
+            audio: true,
+        });
+        const audioTracks = stream.getAudioTracks();
+        if (audioTracks.length > 0) {
+            const audioStream = new MediaStream([audioTracks[0]]);
+            audioDelay.start(audioStream);
+        } else {
+            console.error('No audio track found in the captured stream.');
+        }
     } catch (err) {
-        console.error('Error accessing microphone:', err);
+        console.error('Error accessing tab audio:', err);
     }
 }
 
