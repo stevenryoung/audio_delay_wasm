@@ -1,5 +1,5 @@
 use wasm_bindgen::prelude::*;
-use web_sys::{AudioContext, DelayNode, MediaStream, MediaStreamAudioSourceNode};
+use web_sys::{AudioContext, AudioParam, DelayNode, MediaStream, MediaStreamAudioSourceNode};
 
 #[wasm_bindgen]
 pub struct AudioDelay {
@@ -23,28 +23,33 @@ impl AudioDelay {
         })
     }
 
+    pub fn set_source(&mut self, stream: MediaStream) -> Result<(), JsValue> {
+        let source_node = self.context.create_media_stream_source(&stream)?;
+        source_node.connect_with_audio_node(&self.delay_node)?;
+        self.source_node = Some(source_node);
+        Ok(())
+    }
+
     #[wasm_bindgen]
-    pub fn set_delay(&self, seconds: f64, stream: MediaStream) -> Result<(), JsValue> {
-        let delay_node = self.context.create_delay_with_max_delay_time(seconds)?;
-        let source = self.context.create_media_stream_source(&stream)?;
-        source.connect_with_audio_node(&delay_node)?;
-        self.delay_node.connect_with_audio_node(&self.context.destination())?;
+    pub fn set_delay(&self, seconds: f32) -> Result<(), JsValue> {
+        let _ = self.context.resume()?;
+        self.delay_node.delay_time().set_value(seconds);
         Ok(())
     }
 
     #[wasm_bindgen]
     pub fn start(&mut self, stream: MediaStream) -> Result<(), JsValue> {
-        let source = self.context.create_media_stream_source(&stream)?;
-        source.connect_with_audio_node(&self.delay_node)?;
-        self.source_node = Some(source);
+        let _ = self.context.resume()?;
+        self.set_source(stream)?;
         Ok(())
     }
 
     #[wasm_bindgen]
     pub fn stop(&mut self) -> Result<(), JsValue> {
-        if let Some(source) = self.source_node.take() {
-            source.disconnect()?;
+        if let Some(ref source_node) = self.source_node {
+            source_node.disconnect()?;
         }
+        self.delay_node.disconnect()?;
         Ok(())
     }
 }

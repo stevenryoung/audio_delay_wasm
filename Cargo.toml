@@ -12,9 +12,12 @@ js-sys = "0.3.60"
 web-sys = { version = "0.3.60", features = [
     "AudioContext",
     "AudioNode",
+    "AudioParam",
     "AudioDestinationNode",
     "GainNode",
     "DelayNode",
+    "DisplayMediaStreamConstraints",
+    "MediaDevices",
     "MediaStream",
     "MediaStreamAudioSourceNode",
     "MediaStreamConstraints",
