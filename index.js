@@ -17,14 +17,14 @@ async function run() {
     stopButton.addEventListener('click', stopAudio);
     delaySlider.addEventListener('input', updateDelay);
     // volumeSlider.addEventListener('input', updateVolume);
-    const stream = await navigator.mediaDevices.getDisplayMedia({ 
-        video: true, 
-        audio: true,
-    });
+    // const stream = await navigator.mediaDevices.getDisplayMedia({ 
+    //     video: true, 
+    //     audio: true,
+    // });
 
     function updateDelay() {
         const delay = parseFloat(delaySlider.value);
-        audioDelay.set_delay(delay, stream);
+        audioDelay.set_delay(delay);
         delayValue.textContent = delay.toFixed(1);
     }
 
