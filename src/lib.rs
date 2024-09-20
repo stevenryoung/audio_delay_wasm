@@ -1,5 +1,5 @@
 use wasm_bindgen::prelude::*;
-use web_sys::{AudioContext, AudioParam, DelayNode, MediaStream, MediaStreamAudioSourceNode};
+use web_sys::{AudioContext, DelayNode, MediaStream, MediaStreamAudioSourceNode};
 
 #[wasm_bindgen]
 pub struct AudioDelay {
