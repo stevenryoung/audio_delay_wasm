@@ -14,7 +14,7 @@ python3 -m http.server
 Then navigate to [http://localhost:8000](http://localhost:8000)
 
 # Acknowledgements
-Made using Gitlab Duo and Github Copilot AI code assistance.
+Made using Gitlab Duo and Github Copilot AI code assistants.
 
 # License
 See LICENSE file
